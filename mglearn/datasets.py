@@ -3,6 +3,7 @@ import pandas as pd
 import os
 from scipy import signal
 from sklearn.datasets import load_boston
+from sklearn.datasets import fetch_california_housing
 from sklearn.preprocessing import MinMaxScaler, PolynomialFeatures
 from sklearn.datasets import make_blobs
 
@@ -35,6 +36,13 @@ def load_extended_boston():
     X = PolynomialFeatures(degree=2, include_bias=False).fit_transform(X)
     return X, boston.target
 
+def load_extended_california():
+    housing = fetch_california_housing()
+    X = housing.data
+
+    X = MinMaxScaler().fit_transform(housing.data)
+    X = PolynomialFeatures(degree=2, include_bias=False).fit_transform(X)
+    return X, housing.target
 
 def load_citibike():
     data_mine = pd.read_csv(os.path.join(DATA_PATH, "citibike.csv"))
